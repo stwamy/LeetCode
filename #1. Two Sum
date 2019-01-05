@@ -106,3 +106,5 @@ class Solution:
                 return [dic.get(find),i]
 
             dic[nums[i]]=i
+
+3. enumerate: 既要遍历索引又要遍历元素时,使用该内置函数枚举 可迭代的（iterable）/可遍历的对象（如列表、字符串）
