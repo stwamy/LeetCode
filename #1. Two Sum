@@ -12,6 +12,10 @@ Because nums[0] + nums[1] = 2 + 7 = 9,
 return [0, 1].
 
 --------------------------------------------------------------------------------------------------------------
+Some Points: 
+1. The elements may be negative, don't use "if (nums[i] > target) continue;"
+2. In HashMap, such as nums[i]=3 target=6, don't put this element into the hashmap to prevent find itself, do it after searching
+
 Java:
 
 1. Brute Force
@@ -71,4 +75,34 @@ We traverse the list containing nn elements only once. Each look up in the table
 Space complexity : O(n).
 The extra space required depends on the number of items stored in the hash table, which stores at most n elements.
 
+--------------------------------------------------------------------------------------------------------------
+Some Points:
+1. "for i in nums" is not the index, should use "range(len(nums))"
+2. return use "[]" not "{}" for list
 
+Pyhon:
+1. Brute Force (low efficient, LeetCode Error: Time Limit Exceeded)
+class Solution:
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        for i in range(len(nums)-1):
+            for j in range(i+1,len(nums)):
+                if (target-nums[i]) == nums[j]:
+                    return [i,j]
+
+2. dictionary: 60ms
+
+class Solution:
+    def twoSum(self, nums, target):
+        dic = {}
+        for i in range(len(nums)):
+            find = target - nums[i]
+            
+            if dic.get(find) is not None:
+                return [dic.get(find),i]
+
+            dic[nums[i]]=i
