@@ -79,6 +79,7 @@ The extra space required depends on the number of items stored in the hash table
 Some Points:
 1. "for i in nums" is not the index, should use "range(len(nums))"
 2. return use "[]" not "{}" for list
+3. "if dic.get(find) is not None" 改为 "if find in dic:" 60ms-->58ms
 
 Pyhon:
 1. Brute Force (low efficient, LeetCode Error: Time Limit Exceeded)
@@ -102,9 +103,19 @@ class Solution:
         for i in range(len(nums)):
             find = target - nums[i]
             
-            if dic.get(find) is not None:
+            if find in dic:
                 return [dic.get(find),i]
 
             dic[nums[i]]=i
 
 3. enumerate: 既要遍历索引又要遍历元素时,使用该内置函数枚举 可迭代的（iterable）/可遍历的对象（如列表、字符串）
+   算法和dictionary一样，只是减少了访问数组但不见得有提高效率
+class Solution:
+    def twoSum(self, nums, target):
+        dic = {}
+        for i, num in enumerate(nums):
+            find = target - num
+            if find in dic:
+                return [dic[find], i]
+            else:
+                dic[num] = i
