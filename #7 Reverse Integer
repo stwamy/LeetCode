@@ -53,3 +53,7 @@ Space Complexity: O(1).
     }
 
 
+-----------------------------------------------------------------------------------------------------------------------
+Python:
+Use the same method as Java, also apply the feature in python (no int type claim，取整//，取模mod)
+
