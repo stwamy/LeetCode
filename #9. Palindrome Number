@@ -23,12 +23,37 @@ Complexity Analysis
 Time complexity : O(log10(n)). We divided the input by 10 for every iteration
 Space complexity : O(1).
 
-Java:
+Java: 
+1. refer to #7 -224ms
+class Solution {
+    public boolean isPalindrome(int x) {
+      if (x<0) return false;
+      int tmp = x;
+      int rev = 0;
 
+      while(tmp != 0){
+        rev = rev*10 + tmp%10;
+        tmp /= 10;
+      }
+      
+      return rev==x;        
+    }
+}
 
+2. This time only revert half length of the number to check --152ms
+    public boolean isPalindrome(int x) {
+      if (x<0 || (x%10==0 && x !=0) ) return false;  //eliminate negative numbers and numbers such like 100, 2220... 
 
+      int check = 0;
+      
+      while(check<x){
+        check = check*10 + x%10;
+        x = x/10;
+      }
+      return (x == check || x == check/10);   //when x = 131, after running check=13, x=1
+    }
 
-
+-----------------------------------------------------------------------------------------------------------
 
 Python:
 1. This problem is really easy with python, and converting int to string -420ms
