@@ -15,4 +15,93 @@ Note:
 
 All given inputs are in lowercase letters a-z.
 
-----------------------------------------------
+--------------------------------------------------------------------------------------------
+Java
+1. My first solution, beware of the situation in empty stringArray, the checking string is the prefix instead of any substring
+This method find prefix from small to long in every string, prefix will be changed after once iterate the whole array. -12ms
+
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+
+        if (strs.length == 0) return "";
+
+        String prefix = "";
+        int cnt = 1;
+
+        while(cnt<=strs[0].length()){
+            String s = strs[0].substring(0,cnt);
+            for (int i=0; i<strs.length;i++){
+                if (strs[i].indexOf(s)!=0){
+                    return prefix;
+                }
+            }
+            prefix = s;
+            cnt++;
+        }
+        return prefix;
+        
+    }
+}
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------
+the fragment below is to find the common string not only the prefix
+
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        if (strs.length == 0) return "";
+        if(strs.length==1) return strs[0];
+
+        //1. find the shortest string
+        int shortest;
+        shortest = 0;
+
+        for(int i=0; i< strs.length; i++){  //i can be 1 as well
+            if (strs[i].length() < strs[shortest].length()) shortest = i;
+        }
+
+        String std = strs[shortest];
+        //2.1 One charachter situation:
+        if (std.length()==1){
+            for (int t = 0; t < strs.length; t++) {
+                if (strs[t].indexOf(std) == -1) {
+                   return "";
+                }
+            }
+            return std;
+        }
+
+        //2.2 start scan the substr in that string and look up in the group
+        String f="";
+        for(int i = 0; i<std.length(); i++)
+            for (int j = i+1 ; j <= std.length(); j++) {
+                String tmp = std.substring(i, j);
+                boolean chk = true;
+                for (int t = 0; t < strs.length; t++) {
+                    if (strs[t].indexOf(tmp) == -1) {
+                        chk = false;
+                        break;
+                    }
+                }
+                if (chk == false) continue;
+                if(tmp.length() > f.length()) f=tmp;
+            }
+
+        return f;
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+
+        Solution a = new Solution();
+        String[] s = {"flower","flow","flight"};
+        String[] s1={"cc","cc"};
+        String h = a.longestCommonPrefix(s);
+        System.out.println(h);
+    }
+}
