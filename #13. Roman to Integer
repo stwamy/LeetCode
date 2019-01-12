@@ -39,3 +39,79 @@ Example 5:
 Input: "MCMXCIV"
 Output: 1994
 Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
+
+------------------------------------------------------------------------------------------
+Java:
+1. Use a hashmap to restore the number, convert string into charArray, keep scanning the current char from left to right, and deal with three situation of its left char.( s.charAt(i) is an alternative to s.toCharArray() ).  
+class Solution {
+    public int romanToInt(String s) {
+        HashMap<Character, Integer> dict = new HashMap<>();
+
+        dict.put('I', 1);
+        dict.put('V', 5);
+        dict.put('X', 10);
+        dict.put('L', 50);
+        dict.put('C', 100);
+        dict.put('D', 500);
+        dict.put('M', 1000);
+
+        int total = 0;
+
+        char[] roman = s.toCharArray();
+        int left = dict.get(roman[0]);
+        int subsum = left;
+
+
+        for (int i = 1; i < roman.length; i++) {
+            int cur = dict.get(roman[i]);
+            if (cur == left) {
+                subsum += cur;
+            }
+            if (cur > left) {
+                total = total + cur - subsum;
+                subsum = 0;
+            }
+            if(cur < left){
+                total +=subsum;
+                subsum = cur;
+            }
+            left = cur;
+        }
+
+        total += subsum;
+        return total;        
+    }
+}
+
+2. scan the string from right to left, if current char smaller than its right char, subtraction this number
+almaost the same efficient as left to right.
+
+class Solution {
+    public int romanToInt(String s) {
+        HashMap<Character, Integer> dict = new HashMap<>();
+
+        dict.put('I', 1);
+        dict.put('V', 5);
+        dict.put('X', 10);
+        dict.put('L', 50);
+        dict.put('C', 100);
+        dict.put('D', 500);
+        dict.put('M', 1000);
+
+        int total = 0;
+        int prev = 0;
+
+        for(int i = s.length()-1; i>=0; i--){
+            int cur = dict.get(s.charAt(i));
+            if(cur>=prev){
+                total += cur;
+            }else{
+                total -=cur;
+            }
+
+            prev = cur;
+        }
+
+        return total;
+    }
+}
