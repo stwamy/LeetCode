@@ -41,7 +41,7 @@ Output: 1994
 Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
 
 ------------------------------------------------------------------------------------------
-Java:
+Java: --80ms+
 1. Use a hashmap to restore the number, convert string into charArray, keep scanning the current char from left to right, and deal with three situation of its left char.( s.charAt(i) is an alternative to s.toCharArray() ).  
 class Solution {
     public int romanToInt(String s) {
@@ -115,3 +115,43 @@ class Solution {
         return total;
     }
 }
+
+-----------------------------------------------------------
+Python:
+1. For the same scan left to right method, python easily make dictionary and reverse string in its feature. -- 200ms+
+
+class Solution:
+    def romanToInt(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        dict = {'I':1, 'V':5, 'X':10, 'L':50, 'C':100, 'D':500, 'M':1000}
+        res = 0
+        prv = 'I'  #initial the first rigth comparasion
+
+        for c in s[::-1]:
+            if dict[c] >= dict[prv]:
+                res = res + dict[c]
+            else:
+                res = res - dict[c]
+            prv = c
+
+        return res
+        
+2. Online solution, only few statements with python own features.
+
+class Solution:
+    def romanToInt(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        
+        d = {'M':1000, 'D':500, 'C':100, 'L':50, 'X':10, 'V':5, 'I':1}
+        res, p = 0, 'I'
+        for c in s[::-1]:
+            res, p = res - d[c] if d[c] < d[p] else res + d[c], c
+        return res
+        
+    
