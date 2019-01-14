@@ -17,7 +17,7 @@ All given inputs are in lowercase letters a-z.
 
 --------------------------------------------------------------------------------------------
 Java
-1. My first solution, beware of the situation in empty stringArray, the checking string is the prefix instead of any substring
+1. My first solution, brutal force. Beware of the situation in empty stringArray, the checking string is the prefix instead of any substring
 This method find prefix from small to long in every string, prefix will be changed after once iterate the whole array. -12ms
 
 class Solution {
@@ -43,10 +43,48 @@ class Solution {
     }
 }
 
+2.  Horizontal scanning. Scan array just once, make the initial prefix as strs[0] and find the common substring with the next element. It really saves a lot of operation on focusing the most common substring. -7ms
+    
+    public String longestCommonPrefix(String[] strs) {
+        if (strs.length == 0) return "";
+
+        String prefix = strs[0];
+
+        for(int i=1; i< strs.length; i++) //{ eliminate this "{" can save 1ms
+            while(strs[i].indexOf(prefix)!=0){
+                prefix = prefix.substring(0, prefix.length()-1);
+                if(prefix.isEmpty()) return "";
+        }
+        return prefix;
+
+    }
+
+Time complexity : O(S), where S is the sum of all characters in all strings.
+                  In the worst case all strings are the same. The algorithm compares the string s[1] with the other strings.                     There are S character comparisons, where S is the sum of all characters in the input array.
+
+Space complexity: O(1). We only used constant extra space.
+
+3. Vertical scanning. Actually, this mathod is exactly what I used in "1". -9ms
+
+public String longestCommonPrefix(String[] strs) {
+    if (strs == null || strs.length == 0) return "";
+    for (int i = 0; i < strs[0].length() ; i++){
+        char c = strs[0].charAt(i);
+        for (int j = 1; j < strs.length; j ++) {
+            if (i == strs[j].length() || strs[j].charAt(i) != c)
+                return strs[0].substring(0, i);             
+        }
+    }
+    return strs[0]; // Here is in case of only one string in the array
+}
+
+Time complexity : O(S), where S is the sum of all characters in all strings. 
+                  In the worst case there will be n equal strings with length m 
+                  and the algorithm performs S = m*n character comparisons.
+Space complexity: O(1). We only used constant extra space.
 
 
-
-
+4. Divide and conquer
 
 --------------------------------------------------------------------------------------------
 the fragment below is to find the common string not only the prefix
