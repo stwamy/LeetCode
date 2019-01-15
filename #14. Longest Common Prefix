@@ -94,8 +94,8 @@ Third is return one time left comparing with right.
 class Solution {
     public String longestCommonPrefix(String[] strs) {
         if (strs == null || strs.length == 0) return "";
-        return longestCommonPrefix(strs, 0 , strs.length - 1);
-    }
+        return longestCommonPrefix(strs, 0 , strs.length - 1); //here right=len-1
+    } 
     
     public String longestCommonPrefix(String[] strs, int l, int r) {
         if (l == r) return strs[l];
@@ -150,7 +150,7 @@ class Solution {
         for (String str : strs)
             minLen = Math.min(minLen, str.length());
 
-        int low = 1;
+        int low = 1;               //remember low =1
         int high = minLen;
 
         while (low <= high) {
@@ -160,7 +160,7 @@ class Solution {
             else
                 high = mid - 1;
         }
-        return strs[0].substring(0, (low + high) / 2);
+        return strs[0].substring(0, (low + high) / 2);   //cannot use mid, that is not the latest data
 
     }
 
@@ -240,6 +240,39 @@ class Solution:
         """
         if len(strs) == 0 : return ""
         return dncCommonPrefix(strs, 0, len(strs)-1)
+
+
+4. Binary Search -56ms
+def check(strs, len):
+    tmp = strs[0][:len]
+
+    for w in strs:
+        if w.startswith(tmp) is False:
+            return False
+
+    return True
+    
+class Solution:
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        if len(strs) == 0: return ""
+
+        minWord = min(strs, key=len)  #the min function return a string of strs
+
+        low = 1                     #low is 1 not 0
+        high = len(minWord)
+
+        while(low<=high):
+            mid = (low+high)//2     # use "//"
+
+            if check(strs,mid): low = mid +1
+            else: high = mid-1
+
+        return strs[0][:(low+high)//2]      #recalculate the mid for the latest data
+
 
 
 --------------------------------------------------------------------------------------------
