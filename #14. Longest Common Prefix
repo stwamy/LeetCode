@@ -181,6 +181,66 @@ Time complexity : O(S⋅log(n)), where S is the sum of all characters in all str
 Space complexity : O(1). We only used constant extra space. 
 
 
+--------------------------------------------------------------------------------------------
+Python:
+1. Horizontal Scanning. Python can easily deal with get rid of one last char in prfix[0:-1].  -56ms
+
+class Solution:
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        if len(strs) == 0: return ""
+
+        prefix = strs[0]
+        for i in range(1,len(strs)):
+            while strs[i].startswith(prefix) is False:
+                prefix = prefix[0:-1]                    
+                if prefix == "": return ""
+        return prefix
+ 
+2. Vertical Scanning. -56ms
+ class Solution:
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        if len(strs) == 0 : return ""  #if not strs : return "" this statment runs 60ms
+
+        for i in range(len(strs[0])):
+            ch = strs[0][i]
+            for words in strs:
+                if len(words) == i or words[i] !=ch :  # remember to check len(words) first in case of over index
+                    return strs[0][:i]
+        return strs[0]
+        
+3. Divide and conquer -60ms
+def dncCommonPrefix( strs, l, r):   # should put the sub function out of the class
+    if l == r : return strs[l]
+
+    mid = (l+r)//2    # mid is a float if used (l+r)/2
+    lcpLeft = dncCommonPrefix(strs,l, mid)
+    lcpRight = dncCommonPrefix(strs, mid+1,r)
+    return findPrefix(lcpLeft,lcpRight)
+
+def findPrefix( l, r):
+    m = min(len(l),len(r))
+
+    for i in range(m):
+        if l[i]!=r[i] : return l[:i]  
+    return l[:m]
+    
+class Solution:
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        if len(strs) == 0 : return ""
+        return dncCommonPrefix(strs, 0, len(strs)-1)
+
 
 --------------------------------------------------------------------------------------------
 the fragment below is to find the common string not only the prefix
