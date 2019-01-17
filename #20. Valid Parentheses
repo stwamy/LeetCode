@@ -107,3 +107,27 @@ class Solution:
 
         if stack: return False
         return True
+
+  3. improve #2 -52ms
+    class Solution:
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+
+        sym = {')':'(', ']':'[','}':'{','{':0,'(':0,'[':0}
+        #sym = {')':'(', ']':'[','}':'{'}
+        stack = []
+
+        for ch in s:
+            if ch in sym:
+                if sym[ch] == 0: stack.append(ch)
+                else:
+                    if stack: top = stack.pop()
+                    else: return False
+
+                    if top != sym[ch]: return False
+
+        if stack: return False
+        return True
