@@ -49,9 +49,27 @@ class Solution {
                     nums[i]=nums[j];
                 }
             }
-            return i+1;  
+            return i+1;             //starts at 0, so the length is i+1
     }
 }
 
 Time complextiy : O(n)
 Space complexity: O(1)
+
+--------------------------------
+Python: The same algorithm
+class Solution:
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums: return 0
+
+        cur = 0
+        for n in nums[1:]:          # even only one element in nums, it still passed.
+            if n!=nums[cur]:
+                cur+=1
+                nums[cur] = n
+
+        return cur+1                
