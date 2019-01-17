@@ -28,6 +28,10 @@ Input: "{[]}"
 Output: true
 
 ----------------------------------------------
+Complexity analysis:
+Time Complexity: O(n) on traversing the given string one character at a time and push and pop operations on a stack take O(1) 
+Space Complexity: O(n) as we push all opening brackets onto the stack and in the worst case, we will end up pushing all the brackets onto the stack
+
 1. Java -8ms
 use a stack, it would be easy to solve it. One trick is in scenario stack.empty() when pop it, check stack before pop.
 class Solution {
@@ -54,3 +58,52 @@ class Solution {
         return false;     
     }
 }
+
+
+Python: beware of the stack is empty when pop
+1. use a string to store dictionary - 84ms
+class Solution:
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+
+        sym = "{}[]()"
+        stack = ""
+        
+        for ch in s:
+            loc = sym.find(ch)
+            if loc == -1 : continue
+            if(loc%2==0): 
+                stack +=ch
+            else:
+                if (not stack) or (sym[loc-1] != stack[-1]): return False
+                stack = stack[:-1]
+
+        if not stack :return True
+        
+        return False 
+        
+  2. use dictionary -52ms
+  class Solution:
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+
+        sym = {')':'(', ']':'[','}':'{'}
+        stack = []
+
+        for ch in s:
+            if ch in sym:
+                if stack: top = stack.pop()
+                else: return False
+                
+                if top != sym[ch]: return False
+            else:
+                stack.append(ch)
+
+        if stack: return False
+        return True
