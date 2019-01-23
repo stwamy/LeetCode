@@ -56,5 +56,5 @@ class Main {
 Time Complexity: O(m*n)
 Space Complexity: O(1)
 
-2, KMP 
+2, KMP Substring Search
 https://www.youtube.com/watch?v=BXCEFAzhxGY
