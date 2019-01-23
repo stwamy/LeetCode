@@ -107,3 +107,15 @@ class Solution:
                 head+=1
 
         return head
+
+3. Use Python feature array.remove(i) . --40ms
+class Solution:
+    def removeElement(self, nums, val):
+        """
+        :type nums: List[int]
+        :type val: int
+        :rtype: int
+        """
+        for i in nums[::-1]:         #should handle from the end, or the for loop cannot visit every element!!
+            if i==val: nums.remove(i)
+        return len(nums)
