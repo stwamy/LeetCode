@@ -79,9 +79,57 @@ class Solution {
 
 3, KMP Substring Search
 https://www.youtube.com/watch?v=BXCEFAzhxGY
+https://subetter.com/algorithm/kmp-algorithm.html
 
 Time Complexity:
 m = len(haystack), n = len(needle)
 (1) Built Table: t:O(n), s:O(n)
 (2) Match Traversal: t:O(m), s:O(1)
 Overall: t: O(n+m) s: O(n)
+
+class Solution {
+    public int strStr(String haystack, String needle) {
+        if(needle==null || needle.length()==0) return 0;
+        if(haystack == null || haystack.length() ==0) return -1;
+        
+        int[] next = getNext(needle);
+
+        int i = 0; //pointer for haystack
+        int j = 0; //pointer for needle
+        int sLen = haystack.length();
+        int pLen = needle.length();
+
+        while(i<sLen && j<pLen){
+            if(j==-1 || haystack.charAt(i) ==needle.charAt(j)){
+                i++;
+                j++;
+            }else{
+                j = next[j];
+            }
+        }
+
+        if (j == pLen) return i-j;
+        
+        return -1;
+    }
+
+
+    public int[] getNext(String needle) {
+            int[] next = new int[needle.length()];
+
+            int i = 0;
+            int j = -1;
+            next[0]=-1;
+
+            while(i<needle.length()-1){
+                if(j==-1 || needle.charAt(i)==needle.charAt(j)){
+                    i++;
+                    j++;
+                    next[i] = j;
+                }else{
+                    j=next[j];
+                }
+            }
+            return next;
+    }
+}
