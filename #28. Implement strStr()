@@ -18,10 +18,11 @@ What should we return when needle is an empty string? This is a great question t
 For the purpose of this problem, we will return 0 when needle is an empty string. This is consistent to C's strstr() and Java's indexOf().
 
 
-1. Java
+Java
 some issue in the problems:  --6ms
 what's the result when both parameters are both ""; what's the expected result when needle is empty?
 
+1. scan char by char
 class Solution {
     public int strStr(String haystack, String needle) {
         //return haystack.indexOf(needle);
@@ -52,3 +53,8 @@ class Main {
 
     }
 }
+Time Complexity: O(m*n)
+Space Complexity: O(1)
+
+2, KMP 
+https://www.youtube.com/watch?v=BXCEFAzhxGY
