@@ -58,3 +58,9 @@ Space Complexity: O(1)
 
 2, KMP Substring Search
 https://www.youtube.com/watch?v=BXCEFAzhxGY
+
+Time Complexity:
+m = len(haystack), n = len(needle)
+(1) Built Table: t:O(n), s:O(n)
+(2) Match Traversal: t:O(m), s:O(1)
+Overall: t: O(n+m) s: O(n)
