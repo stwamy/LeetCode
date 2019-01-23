@@ -22,4 +22,88 @@ Note that the order of those five elements can be arbitrary.
 It doesn't matter what values are set beyond the returned length.
 ------------------------------------------------------------
 
-This problem is similar to #26 with an unsorted array. the 
+This problem is similar to #26 with an unsorted array; however, I didn't get the question at the beginning. This question asks to eliminate the val values in num[] instead of removing duplicate values.
+
+Java:
+1. set two pointers at the head, curr is the current spot for updated, ch is the checking element that looping the array. -4ms
+
+class Solution {
+    public int removeElement(int[] nums, int val) {
+        if(nums == null || nums.length ==0) return 0;
+
+        int curr = 0;
+        for(int ch : nums){
+            if (ch !=val){
+                nums[curr]=ch;
+                curr++;
+            }
+        }
+        return curr;        
+    }
+}
+
+Time complexity: O(n)
+Space Complexity: O(1) as required
+
+2. set two pointers for head and tail each, prvent curr=n to help escape the loop  -4ms
+class Solution {
+    public int removeElement(int[] nums, int val) {
+        if(nums == null || nums.length ==0) return 0;
+        int curr = 0;
+        int n = nums.length;
+        
+        while(curr<n){
+            if(nums[curr]==val){
+                nums[curr]=nums[n-1];
+                n--;
+            }else{
+                curr++;
+            }
+            
+        }        
+        return curr;
+    }
+}
+
+
+Python:
+1. Two pointers at head side --36ms
+class Solution:
+    def removeElement(self, nums, val):
+        """
+        :type nums: List[int]
+        :type val: int
+        :rtype: int
+        """
+        if not nums: 
+            return 0
+
+        cur=0
+        for n in nums:
+            if n!=val:
+                nums[cur]=n
+                cur+=1
+
+        return cur        
+        
+2. Two pointers at head and tail each --60ms
+class Solution:
+    def removeElement(self, nums, val):
+        """
+        :type nums: List[int]
+        :type val: int
+        :rtype: int
+        """
+        if not nums: return 0
+
+        head=0
+        tail=len(nums)
+
+        while(head<tail):
+            if nums[head]==val:
+                nums[head]=nums[tail-1]
+                tail-=1
+            else:
+                head+=1
+
+        return head
