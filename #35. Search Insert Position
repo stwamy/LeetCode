@@ -20,3 +20,61 @@ Input: [1,3,5,6], 0
 Output: 0
 
 https://leetcode.windliang.cc/leetCode-35-Search-Insert-Position.html
+
+Use Binary Search to find the index in array. However, the location of the insert element should have some analysis. 
+Everytime the while loop return the left side of the interval, there is an other checking to determin th location of target.
+Check the website above.
+
+Java --2ms
+class Solution {
+    public int searchInsert(int[] nums, int target) {
+        int l = 0;
+        int h = nums.length-1;
+        int mid=0;
+
+        while(l < h){
+            mid = (l+h)/2;
+            
+            if (nums[mid] == target) return mid;
+            
+            if (nums[mid]>target) {
+                h = mid -1;
+            }else{
+                l = mid+1;
+            }
+        }
+
+        if(nums[l]<target) return l+1;
+        return l;
+    }    
+}
+
+时间复杂度：O（log（n））。
+空间复杂度：O（1）
+
+
+Python 
+The same algorithm as java --32ms
+
+class Solution:
+    def searchInsert(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        l=0
+        h=len(nums)-1
+        mid =0
+
+        while(l<h):
+            mid = (l+h)//2
+            if nums[mid] == target : return mid
+            if(nums[mid]<target):
+                l = mid +1
+            else:
+                h = mid -1
+
+        if nums[l] < target: return l+1
+        return l
+       
