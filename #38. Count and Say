@@ -19,3 +19,36 @@ Output: "1"
 Example 2:
 Input: 4
 Output: "1211"
+
+------------------------------------------------------------------------
+Note: The rule inn the sequence: the (i+1)th sequence is the "count and say" of the ith sequence
+
+Java:
+1. My solution use while loop --12ms
+class Solution {
+    public String countAndSay(int n) {
+        if (n == 1) return "1";
+        if (n == 2) return "11";
+
+
+        String cas = "11";
+        for (int t = 2; t < n; t++) {
+            int loc = 0;
+            String r = "";
+            int cnt = 1;
+            while (loc < cas.length()-1) {
+                if (cas.charAt(loc) != cas.charAt(loc + 1)) {
+                    r += Integer.toString(cnt) + cas.charAt(loc) ;
+                    cnt = 1;
+                } else {
+                    cnt++;
+                }
+                loc++;
+            }
+            cas = r+ Integer.toString(cnt) + cas.charAt(loc);
+        }
+
+            return cas;
+        
+    }
+}
