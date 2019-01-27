@@ -98,7 +98,7 @@ class Main {
 }
 
 
-// Another function to simplify the string assemble
+// Another function to simplify the string assemble  --14ms
     private String readS(String s){
         String res = "";
 
