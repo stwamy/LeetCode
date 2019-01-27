@@ -168,7 +168,27 @@ def countAndSay(n):
 
   return res
   
-3. Some other solution use python expression --40ms
+  
+3. use while loop
+def countAndSay1(n):
+  s = '1'
+  for _ in range(n-1):
+      tmp=""
+      loc = 0
+      cnt = 1
+
+      while loc < len(s)-1 :
+        if s[loc] != s[loc+1]:
+          tmp += str(cnt) + s[loc]
+          cnt = 1
+        else:
+          cnt+=1
+        loc+=1
+      s = tmp + str(cnt) + s[loc]
+
+  return s
+  
+4. Some other solution use python expression --40ms
 https://leetcode.com/problems/count-and-say/discuss/15999/4-5-lines-Python-solutions
 
 def countAndSay(self, n):
