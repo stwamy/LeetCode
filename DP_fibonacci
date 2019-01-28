@@ -3,7 +3,63 @@ Three methods:
 2) memoize   TC: O(2n+1)=O(n)
 3) bottom_up TC: O(n)   SC: O(1)
 
+Java:
+class Solution {
+    public int fib(int n) {
+        int result;
+        if (n==1 || n==2)  result= 1;
+        else result = fib(n-1) + fib(n-2);
 
+        return result;
+    }
+
+    public int fib_memo(int n, int[] memo){
+        if (memo[n] >0)  return memo[n];
+
+        int result;
+        if (n==1 || n==2) result = 1;
+        else result = fib_memo(n-1, memo) + fib_memo(n-2, memo);
+
+        memo[n]=result;
+
+        return result;
+    }
+
+    public int fib_bottom_up(int n){
+        int[] bottom_up = new int[n+1];
+        bottom_up[1] = 1;
+        bottom_up[2] = 1;
+
+        for(int i =3; i<n+1; i++){
+            bottom_up[i] = bottom_up[i-1] + bottom_up[i-2];
+        }
+
+        return bottom_up[n];
+
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+
+        Solution test = new Solution();
+
+
+        int n = 5;
+        System.out.println(test.fib(n));
+
+        int[] memo = new int[n+1];
+        System.out.println(test.fib_memo(n, memo));
+
+        System.out.println(test.fib_bottom_up(n));
+    }
+
+
+}
+
+============================
+
+Python:
 def fib(n):
   if n==1 or n==2:
     result = 1
