@@ -1,0 +1,43 @@
+Three methods:
+1) recusion  TC: O(2^n)  SC: O(1)
+2) memoize   TC: O(2n+1)=O(n)
+3) bottom_up TC: O(n)   SC: O(1)
+
+
+def fib(n):
+  if n==1 or n==2:
+    result = 1
+  else:
+    result = fib(n-1)+fib(n-2)
+
+  return result
+
+def fibM(n, memo):  # memoization
+  if memo[n]>0:  return memo[n]
+  if n==1 or n==2 : return 1
+
+  result = fibM(n-1,memo) + fibM(n-2, memo)
+  memo[n]=result
+  return result
+
+def fib_bottom_up(n): # Buttom up method
+  bottom_up = [0]*(n+1)
+
+  bottom_up[1] = 1
+  bottom_up[2] = 1
+
+  for i in range (3, n+1):
+    bottom_up[i] = bottom_up[i-1] + bottom_up[i-2]
+  
+  return bottom_up[n]
+
+
+n = 3
+
+print(n, fib(n))
+
+a = [0]*(n+1)
+print(n, fibM(n, a))
+
+print(n, fib_bottom_up(n))
+  
