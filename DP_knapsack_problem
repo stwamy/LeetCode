@@ -1,0 +1,43 @@
+0-1 knapsack problem
+1. Naive Recursion Solution TC:(2^n)
+2. Memoize Intermediate Result TC:(C*n)
+
+
+===============================
+Python
+
+w = [None,1,2,4,2,5] #weight
+v = [None,5,3,5,3,2] #value
+c = 10
+n = len(w)-1
+
+def KS (n, c):
+  if n==0 or c == 0: 
+    result = 0
+  elif w[n]>c :
+    result = KS(n-1,c)
+  else:
+    tmp1 = KS(n-1,c)
+    tmp2 = v[n] + KS(n-1, c-w[n])
+    result = max(tmp1, tmp2)
+  return result
+
+arr = [[None]*(c+1)]*(n+1)  # arr[n][C]
+
+def KSM(n,c):
+  if arr[n][c] is not None: return arr[n][c]
+
+  if n==0 or c==0:
+    result = 0
+  elif w[n]>c:
+    result = KS(n-1, c)
+  else:
+    tmp1 = KS(n-1,c)
+    tmp2 = v[n]+ KS(n-1, c-w[n])
+    result = max(tmp1, tmp2)
+  arr[n][c] = result
+
+  return result
+
+print(KS(n,c))
+print(KSM(n,c))
