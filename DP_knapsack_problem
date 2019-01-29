@@ -2,7 +2,8 @@
 1. Naive Recursion Solution TC:(2^n)
 2. Memoize Intermediate Result TC:(C*n)
 
-
+https://www.youtube.com/watch?v=xOlhR_2QCXY
+https://www.geeksforgeeks.org/0-1-knapsack-problem-dp-10/
 ===============================
 Python
 
