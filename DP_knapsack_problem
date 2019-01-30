@@ -42,3 +42,45 @@ def KSM(n,c):
 
 print(KS(n,c))
 print(KSM(n,c))
+
+
+=========================================
+Java:
+class Solution {
+    public int KS(int n, int c, int[] w, int[] v){
+        if (n<0 || c==0) return 0;    // since the array[0] has number, n should use 0
+
+        if (w[n]>c)
+            return KS(n-1, c, w, v);
+        else{
+            int tmp1 = KS(n-1, c, w, v);
+            int tmp2 = v[n] + KS(n-1, c-w[n], w, v);
+            return Math.max( tmp1, tmp2);
+        }
+
+
+
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+
+        Solution test = new Solution();
+
+        int[] v = {5,3,5,3,2}; //weight
+        int[] w = {1,2,4,2,5}; //value
+        int c = 10;
+        int n = w.length-1;
+
+        System.out.println(test.KS(n,c, w, v));
+
+        int[] v1 = new int[]{60, 100, 120};
+        int[] w1 = new int[]{10, 20, 30};
+        int c1 = 50;
+        int n1 = w1.length-1;
+        System.out.println(test.KS(n1,c1, w1, v1));
+    }
+
+
+}
