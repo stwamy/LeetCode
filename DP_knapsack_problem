@@ -46,9 +46,16 @@ print(KSM(n,c))
 
 =========================================
 Java:
+
 class Solution {
+    int[][] arr;
+
+    public Solution(int n, int c){
+        arr = new int[n+1][c+1];    // due to n is w.length-1 and should use arr[c], the 2D size add 1
+    }
+
     public int KS(int n, int c, int[] w, int[] v){
-        if (n<0 || c==0) return 0;    // since the array[0] has number, n should use 0
+        if (n<0 || c==0) return 0;  // since the array[0] has number, n should use 0
 
         if (w[n]>c)
             return KS(n-1, c, w, v);
@@ -58,28 +65,44 @@ class Solution {
             return Math.max( tmp1, tmp2);
         }
 
+    }
 
+    public int KSM(int n, int c, int[] w, int[] v){
+        if(n<0 || c ==0) return 0;
+        if (this.arr[n][c]>0) return this.arr[n][c];
 
+        if(w[n]>c) return KSM(n-1, c,w,v);
+        else{
+            int tmp1 = KSM(n-1, c, w, v);
+            int tmp2 = v[n] + KSM(n-1, c-w[n], w, v);
+            int result = Math.max(tmp1,tmp2);
+            arr[n][c] = result;
+            return result;
+        }
     }
 }
 
 class Main {
     public static void main(String[] args) {
 
-        Solution test = new Solution();
 
         int[] v = {5,3,5,3,2}; //weight
         int[] w = {1,2,4,2,5}; //value
         int c = 10;
         int n = w.length-1;
 
+        Solution test = new Solution(n,c);
         System.out.println(test.KS(n,c, w, v));
+        System.out.println(test.KSM(n,c, w, v));
 
         int[] v1 = new int[]{60, 100, 120};
         int[] w1 = new int[]{10, 20, 30};
         int c1 = 50;
         int n1 = w1.length-1;
-        System.out.println(test.KS(n1,c1, w1, v1));
+
+        Solution test1 = new Solution(n1,c1);
+        System.out.println(test1.KS(n1,c1, w1, v1));
+        System.out.println(test1.KSM(n1,c1, w1, v1));
     }
 
 
