@@ -40,9 +40,25 @@ def KSM(n,c):
 
   return result
 
+def KS_Bottom_up(n, c):
+  arr = np.zeros([n+1,c+1])   # should use numpy to create an array, use arr = [[None]*(c+1)]*(n+1)  # arr[n][C] will have relative change.
+ 
+  for i in range(1,n+1):
+    for j in range(1,c+1):
+      
+      if w[i] > j: 
+        arr[i][j] = arr[i-1][j]
+      else:
+        tmp1 = arr[i-1][j]
+        tmp2 = v[i]+ arr[i-1][j-w[i]]
+        arr[i][j] = max(tmp1, tmp2)
+  
+  print(arr)
+  return arr[n][c]
+
 print(KS(n,c))
 print(KSM(n,c))
-
+print(KS_Bottom_up(n, c))
 
 =========================================
 Java:
