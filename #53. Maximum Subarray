@@ -45,7 +45,15 @@ class Solution {
         }
         return maxSum;
     }
-    
+
+3. Divide and Conque
+In array A[left, right], mid = (l+r)/2, the maxSub may exist in three interval:
+    (1). maxSub in A[left, mid-1]
+    (2). maxSub in A[mid+1, right]
+    (3). maxSub corss between mid
+calculate the max value of the three above.
+
+
 =====================================================
 Python:
 1. DP bottom up:  --44ms, TC:O(n)  SC:O(1)
