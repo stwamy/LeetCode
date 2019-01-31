@@ -51,11 +51,11 @@ class Solution {
     int[][] arr;
 
     public Solution(int n, int c){
-        arr = new int[n+1][c+1];    // due to n is w.length-1 and should use arr[c], the 2D size add 1
+        arr = new int[n+1][c+1];
     }
 
     public int KS(int n, int c, int[] w, int[] v){
-        if (n<0 || c==0) return 0;  // since the array[0] has number, n should use 0
+        if (n<0 || c==0) return 0;
 
         if (w[n]>c)
             return KS(n-1, c, w, v);
@@ -80,6 +80,30 @@ class Solution {
             return result;
         }
     }
+
+    public int KS_Bottom_up(int n, int c, int[] w, int[] v){
+        // initial arr
+        int[][] arr = new int[n+1][c+1];
+        for( int i =0; i<c+1; i++){
+            arr[0][i] =0;
+        }
+
+        // calculate each value in the arr
+        // arr[i, w] = max { arr[i-1][w], v[i] + arr[i-1, c-w[i]) } row by row
+
+        for(int i=1; i<n+1; i++)
+            for( int j =1; j< c+1; j++){
+                if (w[i-1] > j){
+                    arr[i][j] = arr[i - 1][j];
+                }
+                else{
+                    int tmp1 = arr[i-1][j];
+                    int tmp2 = v[i-1] + arr[i-1][j-w[i-1]];
+                    arr[i][j] = Math.max(tmp1,tmp2);
+                }
+            }
+        return arr[n][c];
+    }
 }
 
 class Main {
@@ -103,6 +127,7 @@ class Main {
         Solution test1 = new Solution(n1,c1);
         System.out.println(test1.KS(n1,c1, w1, v1));
         System.out.println(test1.KSM(n1,c1, w1, v1));
+        System.out.println(test1.KS_Bottom_up(w1.length, c1, w1, v1));
     }
 
 
