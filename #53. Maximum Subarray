@@ -46,14 +46,50 @@ class Solution {
         return maxSum;
     }
 
-3. Divide and Conque
+3. Divide and Conque --8ms  TC: O(nlogn)
 In array A[left, right], mid = (l+r)/2, the maxSub may exist in three interval:
     (1). maxSub in A[left, mid-1]
     (2). maxSub in A[mid+1, right]
     (3). maxSub corss between mid
 calculate the max value of the three above.
 
+class Solution {
+    public int maxSubArray(int[] nums) {
+        if (nums == null || nums.length ==0) return 0;
 
+        return dnq(nums, 0, nums.length -1, nums[0]);
+    }
+
+    public int dnq(int[] nums, int l, int r, int smax){
+        if(l>=r) return nums[l];  
+        int mid = (l+r)/2;
+
+        int lmax = dnq(nums, l, mid-1, smax);
+        int rmax = dnq(nums, mid+1, r, smax);
+
+        smax = Math.max(lmax, smax);
+        smax = Math.max(rmax, smax);
+
+
+        //sum mid forward
+        int lm = 0; int tmp = 0;
+        for(int i = mid-1; i>=l; i--){
+            tmp += nums[i];
+            lm = Math.max(lm, tmp);
+        }
+
+        //sum mid backward
+        int rm = 0; tmp = 0;
+        for(int i = mid+1; i<=r; i++){
+            tmp += nums[i];
+            rm = Math.max(rm, tmp);
+        }
+
+        int mmax = nums[mid]+ rm + lm;
+
+        return Math.max( smax, mmax);
+    }
+}
 =====================================================
 Python:
 1. DP bottom up:  --44ms, TC:O(n)  SC:O(1)
