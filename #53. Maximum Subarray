@@ -136,3 +136,35 @@ class Solution:
             maxS = max(s, maxS)
         
         return maxS
+        
+ 4. Devide and Conqor: 104ms
+ class Solution:
+    def maxSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums : return 0
+        return dNc(nums, 0, len(nums)-1, nums[0])
+
+def dNc( nums, l, r, tmax):
+    if(l >= r): return nums[l]
+
+    mid = (l+r)//2
+    lmax = dNc(nums, l, mid-1, tmax)
+    rmax = dNc(nums, mid+1, r, tmax)
+
+    lm = 0
+    s = 0
+    for i in range(mid-1, l-1, -1):
+        s +=nums[i]
+        lm = max(s, lm)
+
+    rm = 0
+    s=0
+    for i in nums[mid+1:r+1]:
+        s+=i
+        rm = max(s, rm)
+
+    mmax = max(nums[mid], nums[mid]+lm+rm)
+    return max(max(lmax, max(mmax, rmax)),tmax)
