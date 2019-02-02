@@ -13,7 +13,7 @@ Output: "10101"
 
 ======================================
 Java
-1. the while loop handles every digital and ensures adding carry numbers  --2ms TC: O(m+n)
+1. the while loop handles every digital and ensures adding carry numbers  --2ms TC: O(m+n+c)
 class Solution {
     public String addBinary(String a, String b) { 
         String res = "";
