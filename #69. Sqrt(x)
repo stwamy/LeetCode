@@ -27,7 +27,7 @@ class Solution {
     }
 }
 
-2. Binary Search  --24ms
+2. Binary Search  --24ms  TC: O(log(n))
 class Solution {
     public int mySqrt(int x) {
         if (x<=1) return x;
