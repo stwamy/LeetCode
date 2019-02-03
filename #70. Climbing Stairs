@@ -22,12 +22,47 @@ Explanation: There are three ways to climb to the top.
 
 =======================================================
 Java
-1. My solution with recursion . TC(2^n) --8523ms
+1. Brute Force. My solution with recursion . TC:(2^n), SC:(2^n) --8523ms
 class Solution {
     public int climbStairs(int n) {
 
         if (n==1) return 1;
         if (n==2) return 2;
         return climbStairs(n-1) + climbStairs(n-2);    
+    }
+}
+
+2. Memoize -2ms  TC:O(n), SC:O(n)
+public class Solution {
+    public int climbStairs(int n) {
+        if (n <3) return n;
+
+        int[] steps = new int[n+1];
+        steps[1] = 1;
+        steps[2] = 2;
+
+        for(int i=3; i<n+1; i++){
+            steps[i] = steps[i-1]+steps[i-2];
+        }
+
+        return steps[n];
+    }
+}
+
+3. Memoize optimize storage -2ms
+public class Solution {
+    public int climbStairs(int n) {
+        if (n <3) return n;
+
+        int step1 = 1;
+        int step2 = 2;
+
+        for(int i=3; i<n+1; i++){
+            int cur = step1 + step2;
+            step1 = step2;
+            step2 = cur;
+        }
+
+        return step2;
     }
 }
