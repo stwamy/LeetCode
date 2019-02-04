@@ -1,0 +1,79 @@
+Given a sorted linked list, delete all duplicates such that each element appear only once.
+
+Example 1:
+Input: 1->1->2
+Output: 1->2
+
+Example 2:
+Input: 1->1->2->3->3
+Output: 1->2->3
+
+=============================
+Java
+1. one pointer, check the node one by one --0ms TC: O(n) SC:O(1)
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        if(head == null) return head;     // Don't forget head is null situation.
+        ListNode node = head;
+
+        while(node.next != null){
+            if(node.val ==node.next.val) node.next = node.next.next;
+            else node = node.next;
+        }
+
+        return head;        
+    }
+}
+
+================================
+Python
+1. the same algorithm as java --48ms
+# Definition for singly-linked list.
+class ListNode:
+     def __init__(self, x):
+         self.val = x
+         self.next = None
+
+class Solution:
+    def deleteDuplicates(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if not head : return head
+        node = head
+
+        while(node.next):
+            if node.val == node.next.val:   
+                node.next = node.next.next
+            else:
+                node = node.next
+
+        return head  
+
+
+val = [1,1,2,2,2,3,3,4]
+
+head = ListNode(val[0])
+node = head
+
+for i in val[1:]:
+    node.next = ListNode(i)
+    node = node.next
+
+test = Solution()
+res = test.deleteDuplicates(head)
+
+
+node = res
+while(node):
+    print(node.val)
+    node = node.next 
