@@ -11,27 +11,64 @@ Output: 1->2->3
 =============================
 Java
 1. one pointer, check the node one by one --0ms TC: O(n) SC:O(1)
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) { val = x; }
- * }
- */
 class Solution {
+    /**
+     * Definition for singly-linked list.
+     * public class ListNode {
+     *     int val;
+     *     ListNode next;
+     *     ListNode(int x) { val = x; }
+     * }
+     */
     public ListNode deleteDuplicates(ListNode head) {
-        if(head == null) return head;     // Don't forget head is null situation.
-        ListNode node = head;
+        if(head == null) return head;       // Don't forget the null situation
+        ListNode node = head;   
 
         while(node.next != null){
             if(node.val ==node.next.val) node.next = node.next.next;
             else node = node.next;
         }
 
-        return head;        
+        return head;
+
     }
 }
+
+
+class ListNode {
+     int val;
+     ListNode next;
+     ListNode(int x) { val = x; }
+}
+
+class Main {
+    public static void main(String[] args) {
+
+        int[] val = {1,1,2,2,3,3};
+
+
+        ListNode head = new ListNode(1);
+        ListNode first = head;
+        for(int i=1; i<val.length; i++){;
+            head.next = new ListNode(val[i]);
+            head = head.next;
+        }
+
+        Solution test = new Solution();
+        head = first;
+        test.deleteDuplicates(head);
+        //System.out.println(test.deleteDuplicates(first));
+
+        while(first != null){
+            System.out.println(first.val);
+            first = first.next;
+        }
+
+    }
+
+
+}
+
 
 ================================
 Python
