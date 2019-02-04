@@ -66,3 +66,61 @@ public class Solution {
         return step2;
     }
 }
+
+===========================
+Python
+1. DP bottom up --32ms
+class Solution:
+    def climbStairs(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        if(n<3): return n
+        
+        steps = [None] * (n+1)
+        steps[1] = 1
+        steps[2] = 2
+        
+        for i in range(3, n+1):
+            steps[i] = steps[i-1] + steps[i-2]
+
+        return steps[n]
+       
+ 2. DP recursion -- Time Limit Exceeded
+ class Solution:
+    def climbStairs(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        if (n<3): return n
+        return self.climbStairs(n-1) + self.climbStairs(n-2)
+
+n = 3
+test = Solution()
+print(test.climbStairs(n))        
+
+3. DP memoization -- 32ms
+class Solution:
+    def climbStairs(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        if n<3 : return n
+        res = [None]*(n+1)
+        res[0] = 0
+        res[1] = 1
+        res[2] = 2
+        return self.cal(n, res)
+
+    def cal(self,n,res):
+        if not (res[n]== None):
+            return res[n]
+
+        res[n] = self.cal(n-1, res) + self.cal(n-2, res)
+        return res[n]
+        
+ 
+        
