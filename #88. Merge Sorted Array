@@ -100,3 +100,9 @@ class Solution:
             nums1[l] = nums2[n]
             l-=1
             n-=1        
+            
+        '''
+        alternetive of the above while loop
+        for i in range(0,n+1):
+            nums1[i] = nums2[i]
+        '''
