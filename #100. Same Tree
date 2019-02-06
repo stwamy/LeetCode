@@ -1,0 +1,184 @@
+Given two binary trees, write a function to check if they are the same or not.
+
+Two binary trees are considered the same if they are structurally identical and the nodes have the same value.
+
+Example 1:
+
+Input:     1         1
+          / \       / \
+         2   3     2   3
+
+        [1,2,3],   [1,2,3]
+
+Output: true
+Example 2:
+
+Input:     1         1
+          /           \
+         2             2
+
+        [1,2],     [1,null,2]
+
+Output: false
+Example 3:
+
+Input:     1         1
+          / \       / \
+         2   1     1   2
+
+        [1,2,1],   [1,1,2]
+
+Output: false
+
+============================
+Java
+1. recursion, from up to bottom, check the child node --2ms
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class TreeNode {
+      int val;
+      TreeNode left;
+      TreeNode right;
+      TreeNode(int x) { val = x; }
+ }
+
+class Solution {
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+        if(p==null && q==null) return true;
+        if(p==null || q==null) return false;
+        if(p.val != q.val) return false;
+
+        return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);
+    }
+}
+
+class Main {
+    public static void main(String[] args) {
+        Solution test = new Solution();
+
+        //built a tree
+        int[] v = {1,2,1};
+
+        TreeNode root = new TreeNode(v[0]);
+        TreeNode t = root;
+
+        for(int i = 1; i<v.length; i++){
+            if(i%2==1){
+                t.left = new TreeNode(v[i]);
+            }else {
+                t.right = new TreeNode(v[i]);
+                t = t.right;
+            }
+        }
+
+
+        //built a tree
+        int[] v2 = {1,1,2};
+
+        TreeNode root2 = new TreeNode(v2[0]);
+        TreeNode t2 = root2;
+
+        for(int i = 1; i<v2.length; i++){
+            if(i%2==1){
+                t2.left = new TreeNode(v2[i]);
+            }else {
+                t2.right = new TreeNode(v2[i]);
+                t2 = t2.right;
+            }
+        }
+
+        System.out.println(test.isSameTree(root, root2));
+    }
+
+}
+
+2. iteration method, use stack for assistant. The process will add null node to stack --3ms
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public boolean isSameTree(TreeNode p, TreeNode q) {
+
+        if(p==null || q == null) return p==q;
+
+        //iteration method has to store the node through traverse
+        //be caution of java.lang.NullPointerException when compare null nodes
+        Stack<TreeNode> sp = new Stack<>();
+        Stack<TreeNode> sq = new Stack<>();
+
+        sp.add(p);  sq.add(q);
+
+        while(sp.size()>0 && sq.size()>0){
+            TreeNode node1 = sp.pop();
+            TreeNode node2 = sq.pop();
+
+            if(node1==null || node2==null)
+                if (node1 != node2)
+                    return false;
+                else
+                    continue;
+
+            if(node1.val != node2.val) return false;
+
+            if(node1 != null) {
+                sp.add(node1.left);
+                sp.add(node1.right);
+            }
+
+            if(node2 != null){
+                sq.add(node2.left);
+                sq.add(node2.right);
+            }
+
+        }
+
+        return sp.size()==sq.size();
+
+    }
+}
+
+3. Not add null to stack edition --3ms
+        if(p==null || q == null) return p==q;
+
+        //iteration method has to store the node through traverse
+        //be caution of java.lang.NullPointerException when compare null nodes
+        Stack<TreeNode> sp = new Stack<>();
+        Stack<TreeNode> sq = new Stack<>();
+
+        sp.add(p);  sq.add(q);
+
+        while(sp.size()>0 && sq.size()>0){
+            TreeNode node1 = sp.pop();
+            TreeNode node2 = sq.pop();
+
+            if(node1.val != node2.val) return false;
+
+            if(node1.left != null && node2.left != null) {
+                sp.add(node1.left);
+                sq.add(node2.left);
+            }else{
+                if(node1.left != node2.left) return false;
+            }
+
+            if(node1.right != null && node2.right != null) {
+                sp.add(node1.right);
+                sq.add(node2.right);
+            }else{
+                if(node1.right != node2.right) return false;
+            }
+        }
+
+        return sp.size()==sq.size();
