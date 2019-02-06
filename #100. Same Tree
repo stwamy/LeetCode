@@ -119,9 +119,9 @@ class Solution {
         Stack<TreeNode> sp = new Stack<>();
         Stack<TreeNode> sq = new Stack<>();
 
-        sp.add(p);  sq.add(q);
+        sp.add(p);  sq.add(q);   // sp.push(p); sq.push(q);
 
-        while(sp.size()>0 && sq.size()>0){
+        while(sp.size()>0 && sq.size()>0){  //while(!sp.empty() && !sq.empty()){
             TreeNode node1 = sp.pop();
             TreeNode node2 = sq.pop();
 
