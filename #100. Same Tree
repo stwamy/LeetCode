@@ -225,7 +225,7 @@ class Solution:
         if (p==None or q==None): return p==q
 
         sp, sq = [], []
-        sp.append(p), sq.append(q)
+        sp.append(p), sq.append(q)   # another coding is:  stack = [(p, q)]
 
         while(len(sp)>0 and len(sq)>0):
             n1 = sp.pop()
