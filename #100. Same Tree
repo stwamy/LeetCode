@@ -182,3 +182,66 @@ class Solution {
         }
 
         return sp.size()==sq.size();
+
+=======================================
+Python:
+1. recursion --32ms
+# Definition for a binary tree node.
+class TreeNode:
+     def __init__(self, x):
+         self.val = x
+         self.left = None
+         self.right = None
+
+class Solution:
+    def isSameTree(self, p: 'TreeNode', q: 'TreeNode') -> 'bool':
+        if (p==None or q==None): return p==q
+        if(p.val != q.val) : return False
+
+        return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+
+v1 = [1,2,3]
+v2 = [1,2,4]
+
+root1 = TreeNode(v1[1])
+p = root1
+for i in range(1,len(v1)):
+    if i%2==0:  p.right = TreeNode(v1[i])
+    else: p.left = TreeNode(v1[i])
+   
+root2 = TreeNode(v2[1])
+q = root2
+for i in range(1,len(v2)):
+    if i%2==0:  q.right = TreeNode(v2[i])
+    else: q.left = TreeNode(v2[i])
+
+test = Solution()
+print(test.isSameTree(p,q))
+
+
+2. iteration --36ms
+class Solution:
+    def isSameTree(self, p: 'TreeNode', q: 'TreeNode') -> 'bool':
+        if (p==None or q==None): return p==q
+
+        sp, sq = [], []
+        sp.append(p), sq.append(q)
+
+        while(len(sp)>0 and len(sq)>0):
+            n1 = sp.pop()
+            n2 = sq.pop()
+
+            if n1==None and n2 == None: continue
+            if None in [n1,n2]: return False
+            
+            if(n1.val != n2.val): return False
+            
+            if(n1 is not None):
+                sp.append(n1.left)
+                sp.append(n1.right)
+
+            if(n2 is not None):
+                sq.append(n2.left)
+                sq.append(n2.right)
+        
+        return len(sp)==len(sq)
