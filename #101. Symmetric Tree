@@ -102,3 +102,29 @@ public boolean isSymmetric(TreeNode root) {
     }
     return true;
 }
+
+5. Use stack and rewrite 4 --8ms
+
+public boolean isSymmetric(TreeNode root) {
+        Stack<TreeNode> q = new Stack<>();
+        Stack<TreeNode> q1 = new Stack<>();
+        
+        q.push(root);
+        q1.push(root);
+
+        while(!q.isEmpty() && !q1.isEmpty()) {
+            TreeNode a = q.pop();
+            TreeNode b = q1.pop();
+
+            if ( a == null && b==null) continue;
+            if ( a == null || b==null) return false;
+            if (a.val != b.val) return false;
+            q.push(a.left);
+            q1.push(b.right);
+            q.push(a.right);
+            q1.push(b.left);
+        }
+        return true;
+}
+        q.add(t1.right);
+        q.add(t1.right);
