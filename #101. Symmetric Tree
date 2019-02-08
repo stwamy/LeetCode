@@ -16,3 +16,89 @@ But the following [1,2,2,null,3,null,3] is not:
 Note:
 Bonus points if you could solve it both recursively and iteratively.
 
+=========================
+Java
+1. recursion --14ms . TC:O(n)
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) return true;
+
+        return checkNode(root.left, root.right);
+    }
+
+    public boolean checkNode(TreeNode a, TreeNode b){
+        if (a==null || b==null) return a==b;
+        if (a.val != b.val) return false;
+        System.out.println(a.val + " " + b.val);
+        return checkNode(a.left, b.right) && checkNode(a.right, b.left);
+    }        
+
+}
+
+2. iteration --8ms
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) return true;
+        Stack<TreeNode> sL = new Stack<>();
+        Stack<TreeNode> sR = new Stack<>();
+        
+        sL.push(root.left); sR.push(root.right);
+        
+        while(!sL.empty() && !sR.empty()) {
+            TreeNode node1 = sL.pop();
+            TreeNode node2 = sR.pop();
+            
+            if(node1 != null && node2 != null) {
+                if (node1.val != node2.val) return false;
+                sL.push(node1.left);
+                sL.push(node1.right);
+                sR.push(node2.right);
+                sR.push(node2.left);;
+            }else{
+                if(node1 != node2) return false;
+            }
+        }
+        return sL.size() == sR.size();    
+    }    
+}
+
+3. Use the similar recursive funciton as #100 --6ms
+public boolean isSymmetric(TreeNode root) {
+    return isMirror(root, root);
+}
+
+public boolean isMirror(TreeNode t1, TreeNode t2) {
+    if (t1 == null && t2 == null) return true;
+    if (t1 == null || t2 == null) return false;
+    return (t1.val == t2.val)
+        && isMirror(t1.right, t2.left)
+        && isMirror(t1.left, t2.right);
+}
+
+4. Use Queue for iteration --7ms
+public boolean isSymmetric(TreeNode root) {
+    Queue<TreeNode> q = new LinkedList<>();
+    q.add(root);
+    q.add(root);
+    while (!q.isEmpty()) {
+        TreeNode t1 = q.poll();
+        TreeNode t2 = q.poll();
+        if (t1 == null && t2 == null) continue;
+        if (t1 == null || t2 == null) return false;
+        if (t1.val != t2.val) return false;
+        q.add(t1.left);
+        q.add(t2.right);
+        q.add(t1.right);
+        q.add(t2.left);
+    }
+    return true;
+}
