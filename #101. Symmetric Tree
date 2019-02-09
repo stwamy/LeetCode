@@ -128,3 +128,66 @@ public boolean isSymmetric(TreeNode root) {
 }
         q.add(t1.right);
         q.add(t1.right);
+
+==========================
+Python:
+1. recursive reference java#3 --40ms
+# Definition for a binary tree node.
+class TreeNode:
+     def __init__(self, x):
+         self.val = x
+         self.left = None
+         self.right = None
+
+class Solution:
+    def printTree(self, root: 'TreeNode'):
+        if root.left:  self.printTree(root.left)
+        print( root.val),
+        if root.right: self.printTree(root.right)
+
+    def builtTree(self, arr: 'list'):
+        if not arr:    return None
+        root = TreeNode(arr[0])
+        stack = [root]
+
+        for i in range(1, len(arr),2):
+            node = stack.pop()
+            node.left = TreeNode( arr[i])
+            node.right = TreeNode(arr[i+1])
+            stack.insert(0,node.left)
+            stack.insert(0,node.right)            
+        return root
+
+    def isSymmetric(self, root: 'TreeNode') -> 'bool':
+        return self.checkNode(root, root)
+
+    def checkNode(self, n1: 'TreeNode', n2: 'TreeNode') -> 'bool':
+        if not n1 or not n2 : return n1 ==n2
+        if n1.val != n2.val : return False
+        return self.checkNode(n1.left, n2.right) and self.checkNode(n1.right, n2.left)
+        
+
+
+
+v1 = [1,2,2,3,3,3,3]
+
+test = Solution()
+root = test.builtTree(v1)
+#test.printTree(root)
+print(test.isSymmetric(root))
+
+2. iteration --40ms
+class Solution:
+    def isSymmetric(self, root: 'TreeNode') -> 'bool':
+        stack =[(root, root)]
+
+        while len(stack)>0 :
+            n1, n2 = stack.pop()
+            if n1 and n2: 
+                if(n1.val != n2.val): return False
+                stack.append([n1.left, n2.right])
+                stack.append([n1.right, n2.left])
+            else:
+                if n1 != n2 : return False
+        return True        
+
