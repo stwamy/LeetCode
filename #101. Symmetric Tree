@@ -18,8 +18,8 @@ Bonus points if you could solve it both recursively and iteratively.
 
 =========================
 Java
-1. recursion --14ms . TC:O(n)
-class Solution {
+1. recursion --6ms . TC:O(n) SC:O(n)
+class Solution
     public boolean isSymmetric(TreeNode root) {
         if (root == null) return true;
 
@@ -29,7 +29,6 @@ class Solution {
     public boolean checkNode(TreeNode a, TreeNode b){
         if (a==null || b==null) return a==b;
         if (a.val != b.val) return false;
-        System.out.println(a.val + " " + b.val);
         return checkNode(a.left, b.right) && checkNode(a.right, b.left);
     }        
 
