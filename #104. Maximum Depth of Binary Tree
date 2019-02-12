@@ -14,3 +14,21 @@ Given binary tree [3,9,20,null,null,15,7],
     /  \
    15   7
 return its depth = 3.
+
+======================================
+Java
+1. Recursion --0ms TC:O(log(n))
+class Solution {
+    public int maxDepth(TreeNode root) {
+
+        return (root == null? 0: (1 + Math.max(maxDepth(root.left) , maxDepth(root.right))));        
+    }
+}
+
+2. Recursion --0ms alternative and more readable coding
+class Solution {
+    public int maxDepth(TreeNode root) {
+            if (root == null) return 0;
+            return 1+ Math.max(maxDepth(root.left), maxDepth(root.right));
+    }
+}
