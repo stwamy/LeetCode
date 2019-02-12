@@ -32,3 +32,35 @@ class Solution {
             return 1+ Math.max(maxDepth(root.left), maxDepth(root.right));
     }
 }
+
+3. iteration DFS --4ms TC:O(n)
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if (root == null) return 0;
+
+        int deep = 1;
+        Stack<TreeNode> ts = new Stack<>();
+        Stack<Integer> ds = new Stack<>();
+        ts.push(root);
+        ds.push(deep);
+
+        while(!ts.isEmpty()){
+            TreeNode node = ts.pop();
+            int d = ds.pop();
+
+            deep = Math.max(d, deep);
+            if(node.left !=null){
+                ts.push(node.left);
+                ds.push(d+1);
+            }
+            if(node.right !=null){
+                ts.push(node.right);
+                ds.push(d+1);
+            }
+        }
+        return deep;
+    }
+}
+
+
+4. iteration WFS --4ms TC:O(n)
