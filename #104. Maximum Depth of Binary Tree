@@ -33,7 +33,9 @@ class Solution {
     }
 }
 
-3. iteration DFS --2ms TC:O(n)  use queue
+3. Iteration BFS --2ms TC:O(n)  use queue . 
+Breadth First Traversal (Or Level Order Traversal)
+
 class Solution {
     public int maxDepth(TreeNode root) {
         if (root == null) return 0;
@@ -64,7 +66,7 @@ class Solution {
     }
 }
 
-4. Iteration DFS -- 3ms use stack
+4. Iteration BFS -- 3ms use stack
 class Solution {
     public int maxDepth(TreeNode root) {
         if (root == null) return 0;
@@ -94,7 +96,9 @@ class Solution {
     }
 }
 
-4. iteration WFS --4ms TC:O(n)
+5. Iteration DFS --4ms TC:O(n)
+Depth First Traversals
+
 
 
 -----------------------------------------
@@ -106,7 +110,7 @@ python:
         else:
             return 1+max(self.maxDepth(root.left), self.maxDepth(root.right))   
             
-2. Iteration DFS --52ms . //queue
+2. Iteration BFS --52ms . //queue
 class Solution:
     def maxDepth(self, root: TreeNode) -> int:
         if root == None:  return 0
@@ -127,7 +131,7 @@ class Solution:
 
         return deep      
 
-3. Iteration DFS -- 52ms //stack
+3. Iteration BFS -- 52ms //stack
     def maxDepth(self, root: TreeNode) -> int:
         if root == None:  return 0
 
