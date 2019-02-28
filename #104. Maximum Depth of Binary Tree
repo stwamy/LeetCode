@@ -33,32 +33,34 @@ class Solution {
     }
 }
 
-3. iteration DFS --4ms TC:O(n)
+3. iteration DFS --2ms TC:O(n)  use queue instead of stack
 class Solution {
     public int maxDepth(TreeNode root) {
         if (root == null) return 0;
 
         int deep = 1;
-        Stack<TreeNode> ts = new Stack<>();
-        Stack<Integer> ds = new Stack<>();
-        ts.push(root);
-        ds.push(deep);
+        Queue<TreeNode> ts = new LinkedList<>();
+        Queue<Integer> ds = new LinkedList<>();
+        //add()和remove()方法在失败的时候会抛出异常(不推荐)
+        ts.offer(root);
+        ds.offer(deep);
 
         while(!ts.isEmpty()){
-            TreeNode node = ts.pop();
-            int d = ds.pop();
+            TreeNode node = ts.poll();
+            int d = ds.poll();
 
             deep = Math.max(d, deep);
             if(node.left !=null){
-                ts.push(node.left);
-                ds.push(d+1);
+                ts.offer(node.left);
+                ds.offer(d+1);
             }
             if(node.right !=null){
-                ts.push(node.right);
-                ds.push(d+1);
+                ts.offer(node.right);
+                ds.offer(d+1);
             }
         }
         return deep;
+
     }
 }
 
