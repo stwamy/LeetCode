@@ -64,3 +64,34 @@ class Solution {
 
 
 4. iteration WFS --4ms TC:O(n)
+
+
+-----------------------------------------
+python:
+1. Recursion: -- 52ms
+   def maxDepth1(self, root: TreeNode) -> int:
+        if root == None:
+            return 0
+        else:
+            return 1+max(self.maxDepth(root.left), self.maxDepth(root.right))   
+            
+2. Iteration DFS --52ms
+class Solution:
+    def maxDepth(self, root: TreeNode) -> int:
+        if root == None:  return 0
+
+        deep = 1
+        stack = []
+        stack.append([root, deep])
+
+        while(stack):
+            node, d = stack.pop(0)  # Here should use a queue instead of stack because the depth is smaller on the left.
+            deep = max(d, deep)
+
+            if node.left is not None:
+                stack.append([node.left, deep+1])
+            
+            if node.right is not None:
+                stack.append([node.right, deep+1])
+
+        return deep      
