@@ -33,7 +33,7 @@ class Solution {
     }
 }
 
-3. iteration DFS --2ms TC:O(n)  use queue instead of stack
+3. iteration DFS --2ms TC:O(n)  use queue
 class Solution {
     public int maxDepth(TreeNode root) {
         if (root == null) return 0;
@@ -64,6 +64,35 @@ class Solution {
     }
 }
 
+4. Iteration DFS -- 3ms use stack
+class Solution {
+    public int maxDepth(TreeNode root) {
+        if (root == null) return 0;
+
+        int deep = 1;
+        Stack<TreeNode> ts = new Stack<>();
+        Stack<Integer> ds = new Stack<>();
+        ts.push(root);
+        ds.push(deep);
+
+        while(!ts.isEmpty()){
+            TreeNode node = ts.pop();
+            int d = ds.pop();
+
+            deep = Math.max(d, deep);
+            if(node.left !=null){
+                ts.push(node.left);
+                ds.push(d+1);
+            }
+            if(node.right !=null){
+                ts.push(node.right);
+                ds.push(d+1);
+            }
+        }
+        return deep;
+
+    }
+}
 
 4. iteration WFS --4ms TC:O(n)
 
@@ -77,7 +106,7 @@ python:
         else:
             return 1+max(self.maxDepth(root.left), self.maxDepth(root.right))   
             
-2. Iteration DFS --52ms
+2. Iteration DFS --52ms . //queue
 class Solution:
     def maxDepth(self, root: TreeNode) -> int:
         if root == None:  return 0
@@ -97,3 +126,22 @@ class Solution:
                 stack.append([node.right, deep+1])
 
         return deep      
+
+3. Iteration DFS -- 52ms //stack
+    def maxDepth(self, root: TreeNode) -> int:
+        if root == None:  return 0
+
+        deep = 1
+        stack = []
+        stack.append([root, deep])
+
+        while(stack):
+            node, d = stack.pop()
+            deep = max(d, deep)
+            if node.left is not None:
+                stack.append([node.left, d+1]) 
+            
+            if node.right is not None:
+                stack.append([node.right, d+1])
+
+        return deep
