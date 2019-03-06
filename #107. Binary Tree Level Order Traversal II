@@ -100,3 +100,32 @@ class Solution {
     }
 }
 
+===========================================
+Python:
+
+1. Recursion ---44ms
+Since python List has insert function, we don't have to initiate the List at the begining
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def levelOrderBottom(self, root: TreeNode) -> List[List[int]]:
+        res = []
+        if root == None: return res
+        
+        self.travers(res, root, 1)
+        return res 
+    
+    def travers(self, res: List[List[int]], node: TreeNode, level: int):
+        if node == None: return
+
+        if len(res)<level: res.insert(0,[])
+        res[len(res)-level].append(node.val)
+
+        self.travers(res, node.left, level+1)
+        self.travers(res, node.right, level+1)
