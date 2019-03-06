@@ -129,3 +129,31 @@ class Solution:
 
         self.travers(res, node.left, level+1)
         self.travers(res, node.right, level+1)
+
+
+2. Iteration -- 44ms
+class Solution:
+    def levelOrderBottom(self, root: TreeNode) -> List[List[int]]:
+        if root == None: return []
+
+        res, NodeQ = [],[]
+        res.append([root.val])
+        NodeQ.insert(0, root)
+
+        while NodeQ:
+            iPop = len(NodeQ)
+            tmp = []
+        
+            for i in range(iPop):
+                node = NodeQ.pop()
+                
+                if node.left != None:
+                    tmp.append(node.left.val)
+                    NodeQ.insert(0, node.left)
+                if node.right != None:
+                    tmp.append(node.right.val)
+                    NodeQ.insert(0, node.right)
+
+            if len(tmp)>0: res.insert(0, tmp)    
+            
+        return res      
