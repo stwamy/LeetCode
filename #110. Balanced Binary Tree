@@ -52,3 +52,25 @@ class Solution {
         return Math.max(maxDept(root.left), maxDept((root.right))) +1;
     }
 }
+
+==========================
+Python:
+1. recursion --84ms the same algorithem as java, remember the first capital letter of True and False
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def isBalanced(self, root: TreeNode) -> bool:
+        if not root: return True
+        if abs(self.maxDept(root.left) - self.maxDept(root.right))>1: return False
+
+        return self.isBalanced(root.left) and self.isBalanced(root.right)
+
+    def maxDept(self, root:TreeNode) -> int:
+        if not root: return 0
+
+        return 1+ max(self.maxDept(root.left), self.maxDept(root.right))        
