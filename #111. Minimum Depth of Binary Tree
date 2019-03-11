@@ -75,3 +75,24 @@ class Solution:
         
         return 1+min(self.minDepth(root.left), self.minDepth(root.right))
 
+2. Iteration -- 48ms
+class Solution:
+    def minDepth(self, root: TreeNode) -> int:
+        if not root: return 0
+        if not root.left and not root.right: return 1
+        
+        NodeQ = []
+        NodeQ.insert(0, root)
+        d = 1
+        
+        while(len(NodeQ) >0):
+            s = len(NodeQ)
+            for i in range(s):
+                node = NodeQ.pop()
+                if node:
+                    if not node.left and not node.right:   return d
+                    if node.left: NodeQ.insert(0, node.left)
+                    if node.right: NodeQ.insert(0, node.right)
+            d +=1
+        
+        return d
