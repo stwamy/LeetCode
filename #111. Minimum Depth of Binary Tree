@@ -17,11 +17,49 @@ return its minimum depth = 2.
 
 ================================================
 Java:
+1. Recursion -- 0ms there are four situation: node is null; node is leaf; node has one child; node has two children.
+class Solution {
+    public int minDepth(TreeNode root) {
+        if (root == null) return 0;
+        
+        if (root.left==null && root.right == null) return 1;
+        
+        if (root.left==null)
+            return 1+ minDepth(root.right);
+        if (root.right == null)
+            return 1+ minDepth(root.left);
+        
+        return 1+Math.min(minDepth(root.left), minDepth(root.right));
+    }
+}
 
 
+2. Iteration --0ms Use Queue and find leaf by level
+class Solution {
+    public int minDepth(TreeNode root) {
+        if (root == null) return 0;
+        if (root.left == null && root.right == null) return 1;
 
+        Queue<TreeNode> s = new LinkedList<>();
+        s.offer(root);
+        int d = 1;
 
+        while(!s.isEmpty()){
+            int levelNode = s.size();
+            for(int i=0; i<levelNode; i++){
+                TreeNode curr = s.poll();
+                if (curr != null){
+                    if(curr.left == null && curr.right == null) return d;
 
+                    if(curr.left != null)   s.offer(curr.left);
+                    if(curr.right != null)  s.offer(curr.right);
+                }
+            }
+            d++;
+        }
+        return d;
+    }
+}
 
 ================================================
 Python:
