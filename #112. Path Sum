@@ -85,3 +85,28 @@ class Solution:
             else: return False
 
         return self.hasPathSum(root.left, sum-root.val) or self.hasPathSum(root.right, sum-root.val) 
+        
+2. Iteration --56ms the same algarithem as java#2
+class Solution:
+    def hasPathSum(self, root: TreeNode, sum: int) -> bool:
+        if not root: return False
+        if not root.left and not root.right:
+            if root.val == sum: return True
+
+        NodeQ = []
+        NodeQ.insert(0, root)
+
+        while len(NodeQ)>0:
+            node = NodeQ.pop()
+            if not node.left and not node.right:
+                if node.val == sum: return True
+            
+            if node.left:
+                node.left.val += node.val
+                NodeQ.insert(0, node.left)
+            
+            if node.right:
+                node.right.val += node.val
+                NodeQ.insert(0, node.right)
+
+        return False 
